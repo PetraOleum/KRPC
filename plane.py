@@ -1,10 +1,11 @@
+#! /bin/python3
 # A script that flies a plane
 import time
 import krpc
 
 # The IP of the KRPC server (if not same computer)
 remote = '192.169.1.10'
-conn = krpc.connect(name='Plane autopilot', remote)
+conn = krpc.connect(name='Plane autopilot', address=remote)
 vessel = conn.space_center.active_vessel
 body = vessel.orbit.body
 r_frame = body.reference_frame
