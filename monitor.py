@@ -30,7 +30,7 @@ button.rect_transform.position = (0, 0)
 # Set up a stream to monitor the throttle button
 button_clicked = conn.add_stream(getattr, button, 'clicked')
 f = open(datafile, 'w')
-f.write('timepoint, current_altitude, v_speed, h_speed, mass, fuel, available_thrust\n')
+f.write('timepoint, current_altitude, v_speed, h_speed, mass, fuel, available_thrust, current_thrust, g_force\n')
 timepoint = 0
 
 vessel = conn.space_center.active_vessel
@@ -44,9 +44,14 @@ while button_clicked() == False:
     current_altitude = vessel.flight(r_frame).surface_altitude
     v_speed = vessel.flight(r_frame).vertical_speed
     h_speed = vessel.flight(r_frame).horizontal_speed
-    f.write('{0}, {1}, {2}, {3}, {4}, {5}, {6}\n'.format(timepoint,
-                                                         current_altitude,
-                                                         v_speed, h_speed, vm, vm - dry_mass, at))
+    c_thrust = vessel.thrust
+    g_force = vessel.flight(r_frame).g_force
+    f.write('{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}\n'.format(timepoint,
+                                                              current_altitude,
+                                                              v_speed, h_speed,
+                                                              vm, vm -
+                                                              dry_mass, at,
+                                                              c_thrust, g_force))
     timepoint = timepoint + 1
     time.sleep(0.1)
 

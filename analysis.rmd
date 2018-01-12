@@ -18,6 +18,8 @@ hspd <- baseg + geom_line(aes(y=h_speed)) + ylab("Horizontal speed (m/s)") + ggt
 mass <- baseg + geom_line(aes(y=mass)) + ylab("Vessel mass (kg)") + ggtitle("Mass")
 fuel <- baseg + geom_line(aes(y=fuel)) + ylab("Fuel (kg)") + ggtitle("Fuel")
 at <- baseg + geom_line(aes(y=available_thrust)) + ylab("Available thrust (Newtons)") + ggtitle("Available thrust")
+thrust <- baseg + geom_line(aes(y=current_thrust)) + ylab("Current thrust (Newtons)") + ggtitle("Current thrust")
+g_force <- baseg + geom_line(aes(y=g_force)) + ylab("G-force (m/s²)") + ggtitle("G-force")
 ```
 
 ```{r drawgraphs, echo=FALSE}
@@ -27,4 +29,6 @@ hspd
 mass
 fuel
 at
+thrust
+g_force
 ```
