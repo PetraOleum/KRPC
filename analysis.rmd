@@ -16,12 +16,14 @@ flight <- read.csv("flight.csv", header=T)
 ```
 
 ```{r graph}
-baseg <- ggplot(flight, aes(x=timepoint / 10)) + xlab("Time (seconds)") + theme_classic()
+baseg <- ggplot(flight, aes(x=mission_time)) + xlab("Time (seconds)") + theme_classic()
 alt <- baseg + geom_line(aes(y=current_altitude)) + ylab("Altitude (m)") + ggtitle("Altitude")
 vspd <- baseg + geom_line(aes(y=v_speed)) + ylab("Vertical speed (m/s)") + ggtitle("Vertical speed")
 hspd <- baseg + geom_line(aes(y=h_speed)) + ylab("Horizontal speed (m/s)") + ggtitle("Horizontal speed")
 mass <- baseg + geom_line(aes(y=mass)) + ylab("Vessel mass (kg)") + ggtitle("Mass")
-fuel <- baseg + geom_line(aes(y=fuel)) + ylab("Fuel (kg)") + ggtitle("Fuel")
+ec <- baseg + geom_line(aes(y=electric_charge)) + ylab("Electric charge") + ggtitle("Electric charge")
+lf <- baseg + geom_line(aes(y=liquid_fuel)) + ylab("Liquid fuel (litres)") + ggtitle("Liquid fuel")
+ox <- baseg + geom_line(aes(y=oxidizer)) + ylab("Oxidizer (litres)") + ggtitle("Oxidizer")
 at <- baseg + geom_line(aes(y=available_thrust)) + ylab("Available thrust (Newtons)") + ggtitle("Available thrust")
 thrust <- baseg + geom_line(aes(y=current_thrust)) + ylab("Current thrust (Newtons)") + ggtitle("Current thrust")
 g_force <- baseg + geom_line(aes(y=g_force)) + ylab("G-force (m/s²)") + ggtitle("G-force")
@@ -32,7 +34,9 @@ alt
 vspd
 hspd
 mass
-fuel
+ec
+lf
+ox
 at
 thrust
 g_force

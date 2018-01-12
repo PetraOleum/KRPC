@@ -42,8 +42,7 @@ button.rect_transform.position = (0, 0)
 button_clicked = conn.add_stream(getattr, button, 'clicked')
 
 f = open(datafile, 'w')
-f.write('timepoint, current_altitude, v_speed, h_speed, mass, fuel, available_thrust, current_thrust, g_force\n')
-timepoint = 0
+f.write('mission_time, current_altitude, v_speed, h_speed, mass, electric_charge, liquid_fuel, oxidizer, available_thrust, current_thrust, g_force\n')
 
 vessel = conn.space_center.active_vessel
 body = vessel.orbit.body
@@ -57,14 +56,12 @@ while button_clicked() == False:
     v_speed = vessel.flight(r_frame).vertical_speed
     h_speed = vessel.flight(r_frame).horizontal_speed
     c_thrust = vessel.thrust
+    e_charge = vessel.resources.amount('ElectricCharge')
+    lf = vessel.resources.amount('LiquidFuel')
+    ox = vessel.resources.amount('Oxidizer')
     g_force = vessel.flight(r_frame).g_force
-    f.write('{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}\n'.format(timepoint,
-                                                              current_altitude,
-                                                              v_speed, h_speed,
-                                                              vm, vm -
-                                                              dry_mass, at,
-                                                              c_thrust, g_force))
-    timepoint = timepoint + 1
+    timept = vessel.met
+    f.write('{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}\n'.format(timept, current_altitude, v_speed, h_speed, vm, e_charge, lf, ox, at, c_thrust, g_force))
     time.sleep(0.1)
 
 f.close()
