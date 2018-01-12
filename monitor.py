@@ -24,11 +24,23 @@ rect.size = (200, 50)
 rect.position = (110-(screen_size[0]/2), screen_size[1]/2-75)
 
 # Add a button to set the throttle to maximum
-button = panel.add_button("Stop monitor")
+button = panel.add_button("Start monitor")
 button.rect_transform.position = (0, 0)
 
 # Set up a stream to monitor the throttle button
 button_clicked = conn.add_stream(getattr, button, 'clicked')
+
+# Wait for button
+while button_clicked() == False:
+    time.sleep(0.1)
+
+button.remove()
+
+# replace button
+button = panel.add_button("Stop monitor")
+button.rect_transform.position = (0, 0)
+button_clicked = conn.add_stream(getattr, button, 'clicked')
+
 f = open(datafile, 'w')
 f.write('timepoint, current_altitude, v_speed, h_speed, mass, fuel, available_thrust, current_thrust, g_force\n')
 timepoint = 0

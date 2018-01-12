@@ -4,6 +4,11 @@ title: "Flight analysis"
 
 This file creates graphs of recorded flight parameters
 
+```{r opts, include=FALSE}
+library(knitr)
+opts_chunk$set(tidy=TRUE)
+```
+
 ```{r init}
 library(ggplot2)
 library(scales)
