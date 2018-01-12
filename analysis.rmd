@@ -1,0 +1,20 @@
+---
+title: "Flight analysis"
+---
+
+This file creates graphs of recorded flight parameters
+
+```{r init}
+library(ggplot2)
+library(scales)
+flight <- read.csv("flight.csv", header=T)
+```
+
+```{r graph}
+baseg <- ggplot(flight, aes(x=timepoint / 10)) + xlab("Time (seconds)") + theme_classic()
+alt <- baseg + geom_line(aes(y=current_altitude)) + ylab("Altitude (m)") + title("Altitude"
+spd <- baseg + geom_line(aes(y=v_speed)) + ylab("Vertical speed (m/s)") + title("Vertical speed")
+mass <- baseg + geom_line(aes(y=mass)) + ylab("Vessel mass (kg)") + title("Mass")
+fuel <- baseg + geom_line(aes(y=fuel)) + ylab("Fuel (kg)") + title("Fuel")
+minvia <- baseg + geom_line(aes(y=minviable)) + scale_y_continuous(labels=scales::percent) + ylab("Minimum viable thrust percentage") + title("Throttle")
+```

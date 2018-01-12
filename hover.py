@@ -6,6 +6,8 @@ import krpc
 # Target altitude in meters
 target_altitude = 100
 
+datafile = 'flight.csv'
+
 # The IP of the KRPC server (if not same computer)
 remote = '192.168.1.10'
 # Make connection
@@ -22,19 +24,22 @@ vessel.control.activate_next_stage()
 
 grav = body.surface_gravity
 at = vessel.available_thrust
+dry_mass = vessel.dry_mass
 
 vessel.control.legs = False
 vessel.auto_pilot.target_pitch_and_heading(90, 90)
 vessel.auto_pilot.engage()
 timepoint = 0
 
-print('timepoint, current_altitude, v_speed, mass, minviable')
+f = open(datafile, 'w')
+
+f.write('timepoint, current_altitude, v_speed, mass, fuel, minviable\n')
 while at > 0:
     vm = vessel.mass
     minviable = (vm * grav) / at
     current_altitude = vessel.flight(r_frame).surface_altitude
     v_speed = vessel.flight(r_frame).vertical_speed
-    print(timepoint, current_altitude, v_speed, vm, minviable, sep=',')
+    f.write('{0}, {1}, {2}, {3}, {4}, {5}\n'.format(timepoint, current_altitude, v_speed, vm, vm - dry_mass, minviable))
     if current_altitude > target_altitude:
         if v_speed < 0:
             vessel.control.throttle = minviable * 0.6
@@ -50,4 +55,5 @@ while at > 0:
     at = vessel.available_thrust
     timepoint = timepoint + 1
 
+f.close()
 conn.close()
