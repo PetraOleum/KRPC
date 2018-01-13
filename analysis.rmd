@@ -27,6 +27,14 @@ ox <- baseg + geom_line(aes(y=oxidizer)) + ylab("Oxidizer (litres)") + ggtitle("
 at <- baseg + geom_line(aes(y=available_thrust)) + ylab("Available thrust (Newtons)") + ggtitle("Available thrust")
 thrust <- baseg + geom_line(aes(y=current_thrust)) + ylab("Current thrust (Newtons)") + ggtitle("Current thrust")
 g_force <- baseg + geom_line(aes(y=g_force)) + ylab("G-force (m/s²)") + ggtitle("G-force")
+ap <- baseg + geom_line(aes(y=apoapsis)) + ylab("Apoapsis height (m)") + ggtitle("Apoapsis")
+pa <- baseg + geom_line(aes(y=periapsis)) + ylab("Periapsis height (m)") + ggtitle("Periapsis")
+orad <- baseg + geom_line(aes(y=orbital_radius)) + ylab("Orbital radius (m)") + ggtitle("Orbital radius")
+os <- baseg + geom_line(aes(y=orbit_speed)) + ylab("Orbital speed (m/s)") + ggtitle("Orbital speed")
+op <- baseg + geom_line(aes(y=orbit_period)) + ylab("Orbital period (s)") + ggtitle("Orbital period")
+
+
+
 ```
 
 ```{r drawgraphs, echo=FALSE}
@@ -40,4 +48,9 @@ ox
 at
 thrust
 g_force
+ap
+pa
+orad
+os
+op
 ```
