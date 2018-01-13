@@ -27,7 +27,6 @@ dry_mass = vessel.dry_mass
 vessel.control.legs = False
 vessel.auto_pilot.target_pitch_and_heading(90, 90)
 vessel.auto_pilot.engage()
-timepoint = 0
 
 while at > 0:
     vm = vessel.mass
@@ -40,13 +39,11 @@ while at > 0:
         else:
             vessel.control.throttle = 0
     else:
-        if v_speed > 0:
-            vessel.control.throttle = (2 - ((current_altitude + 20) /
-                                            (target_altitude + 20))) * minviable
+        if v_speed >= 0:
+            vessel.control.throttle = minviable * 1.1
         else:
-            vessel.control.throttle = (3 - (current_altitude / target_altitude)) * minviable
+            vessel.control.throttle = minviable * 3
     time.sleep(0.1)
     at = vessel.available_thrust
-    timepoint = timepoint + 1
 
 conn.close()
