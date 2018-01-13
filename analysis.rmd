@@ -13,10 +13,11 @@ opts_chunk$set(tidy=TRUE)
 library(ggplot2)
 library(scales)
 flight <- read.csv("flight.csv", header=T)
+flight$mission_time <- as.POSIXct(flight$mission_time, origin=Sys.Date(), tz="GMT")
 ```
 
 ```{r graph}
-baseg <- ggplot(flight, aes(x=mission_time)) + xlab("Time (seconds)") + theme_classic()
+baseg <- ggplot(flight, aes(x=mission_time)) + xlab("Time (H:M:S)") + theme_classic() + scale_x_datetime(date_labels="%H:%M:%S")
 alt <- baseg + geom_line(aes(y=current_altitude)) + ylab("Altitude (m)") + ggtitle("Altitude")
 vspd <- baseg + geom_line(aes(y=v_speed)) + ylab("Vertical speed (m/s)") + ggtitle("Vertical speed")
 hspd <- baseg + geom_line(aes(y=h_speed)) + ylab("Horizontal speed (m/s)") + ggtitle("Horizontal speed")
