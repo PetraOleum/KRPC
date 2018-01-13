@@ -4,7 +4,7 @@ import time
 import krpc
 
 # Target altitude in meters
-target_altitude = 1000
+target_altitude = 100
 
 # The IP of the KRPC server (if not same computer)
 remote = '192.168.1.10'
