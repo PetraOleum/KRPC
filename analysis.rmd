@@ -14,6 +14,7 @@ library(ggplot2)
 library(scales)
 flight <- read.csv("flight.csv", header=T)
 flight$mission_time <- as.POSIXct(flight$mission_time, origin=Sys.Date(), tz="GMT")
+flight$orbit_period <- as.POSIXct(flight$orbit_period, origin=Sys.Date(), tz="GMT")
 ```
 
 ```{r graph}
@@ -28,11 +29,11 @@ ox <- baseg + geom_line(aes(y=oxidizer)) + ylab("Oxidizer (litres)") + ggtitle("
 at <- baseg + geom_line(aes(y=available_thrust)) + ylab("Available thrust (Newtons)") + ggtitle("Available thrust")
 thrust <- baseg + geom_line(aes(y=current_thrust)) + ylab("Current thrust (Newtons)") + ggtitle("Current thrust")
 g_force <- baseg + geom_line(aes(y=g_force)) + ylab("G-force (m/s²)") + ggtitle("G-force")
-ap <- baseg + geom_line(aes(y=apoapsis)) + ylab("Apoapsis height (m)") + ggtitle("Apoapsis")
-pa <- baseg + geom_line(aes(y=periapsis)) + ylab("Periapsis height (m)") + ggtitle("Periapsis")
+ap <- baseg + geom_line(aes(y=apoapsis)) + ylab("Apoapsis altitude (m)") + ggtitle("Apoapsis")
+pa <- baseg + geom_line(aes(y=periapsis)) + ylab("Periapsis altitude (m)") + ggtitle("Periapsis")
 orad <- baseg + geom_line(aes(y=orbital_radius)) + ylab("Orbital radius (m)") + ggtitle("Orbital radius")
 os <- baseg + geom_line(aes(y=orbit_speed)) + ylab("Orbital speed (m/s)") + ggtitle("Orbital speed")
-op <- baseg + geom_line(aes(y=orbit_period)) + ylab("Orbital period (s)") + ggtitle("Orbital period")
+op <- baseg + geom_line(aes(y=orbit_period)) + ylab("Orbital period (H:M:S)") + ggtitle("Orbital period") + scale_y_datetime(date_labels="%H:%M:%S")
 
 
 

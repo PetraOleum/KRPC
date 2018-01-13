@@ -62,8 +62,8 @@ while button_clicked() == False:
     g_force = vessel.flight(r_frame).g_force
     timept = vessel.met
     vo = vessel.orbit
-    ap = vo.apoapsis
-    pa = vo.periapsis
+    ap = vo.apoapsis_altitude
+    pa = vo.periapsis_altitude
     orad = vo.radius
     os = vo.speed
     op = vo.period
