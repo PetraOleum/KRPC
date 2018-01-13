@@ -2,7 +2,7 @@
 title: "Flight analysis"
 ---
 
-This file creates graphs of recorded flight parameters
+This [R Markdown](http://rmarkdown.rstudio.com/) file creates graphs of recorded flight parameters, stored in `flight.csv` via the `monitor.py` Kerbal RPC script.
 
 ```{r opts, include=FALSE}
 library(knitr)
@@ -12,12 +12,20 @@ opts_chunk$set(tidy=TRUE)
 ```{r init}
 library(ggplot2)
 library(scales)
+library(broom)
 flight <- read.csv("flight.csv", header=T)
 flight$mission_time <- as.POSIXct(flight$mission_time, origin=Sys.Date(), tz="GMT")
 flight$orbit_period <- as.POSIXct(flight$orbit_period, origin=Sys.Date(), tz="GMT")
 ```
 
-```{r graph}
+Columns:
+
+```{r, echo=FALSE, results="asis"}
+cat(paste0("1. ", names(flight)), sep="\n")
+```
+
+```{r graph, message=FALSE}
+# Graphing logic
 baseg <- ggplot(flight, aes(x=mission_time)) + xlab("Time (H:M:S)") + theme_classic() + scale_x_datetime(date_labels="%H:%M:%S") + scale_y_continuous(labels=comma)
 alt <- baseg + geom_line(aes(y=current_altitude)) + ylab("Altitude (m)") + ggtitle("Altitude")
 vspd <- baseg + geom_line(aes(y=v_speed)) + ylab("Vertical speed (m/s)") + ggtitle("Vertical speed")
@@ -34,9 +42,6 @@ pa <- baseg + geom_line(aes(y=periapsis)) + ylab("Periapsis altitude (m)") + ggt
 orad <- baseg + geom_line(aes(y=orbital_radius)) + ylab("Orbital radius (m)") + ggtitle("Orbital radius")
 os <- baseg + geom_line(aes(y=orbit_speed)) + ylab("Orbital speed (m/s)") + ggtitle("Orbital speed")
 op <- baseg + geom_line(aes(y=orbit_period)) + ylab("Orbital period (H:M:S)") + ggtitle("Orbital period") + scale_y_datetime(date_labels="%H:%M:%S")
-
-
-
 ```
 
 ```{r drawgraphs, echo=FALSE}
